@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+export SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+# diversity of apps to start
+dunst &
+nm-applet &
+lxqt-policykit-agent &
+
+# Set the theme.ron config
+leftwm command "LoadTheme $SCRIPTPATH/theme.ron"
+
+pkill polybar
+echo "---" | tee -a ~/.cache/polybar-top.log ~/.cache/polybar-bottom.log
+polybar top >>~/.cache/polybar-top.log 2>&1 &
+polybar bottom >>~/.cache/polybar-bottom.log 2>&1 &
